@@ -21,10 +21,10 @@ const FOV: f32 = PI / 3.0;
 
 fn cell_color(cell: char) -> u32 {
     match cell {
-        '+' => 0x00AAFF, // columnas
-        '-' => 0xFF5555, // paredes horizontales
-        '|' => 0xFF5555, // paredes verticales
-        'g' | 'G' => 0x00FF00, // meta
+        '+' => 0x4afbff, // columnas
+        '-' => 0x4b0082, // paredes horizontales
+        '|' => 0x4afbff, // paredes verticales
+        'g' | 'G' => 0x008200, // meta
         _ => 0xFFDDDD,   // cualquier otra cosa
     }
 }
