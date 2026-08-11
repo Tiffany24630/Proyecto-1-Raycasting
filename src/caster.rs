@@ -14,8 +14,15 @@ pub fn cast_ray(
     framebuffer.set_current_color(0xFFDDDD);
 
     loop {
-        let x = (player.pos.x + d * a.cos()) as usize;
-        let y = (player.pos.y + d * a.sin()) as usize;
+        let xf = player.pos.x + d * a.cos();
+        let yf = player.pos.y + d * a.sin();
+
+        if xf < 0.0 || yf < 0.0 {
+            return;
+        }
+
+        let x = xf as usize;
+        let y = yf as usize;
 
         let i = x / block_size;
         let j = y / block_size;
@@ -29,7 +36,6 @@ pub fn cast_ray(
         }
 
         framebuffer.point(x, y);
-
         d += 1.0;
     }
 }
