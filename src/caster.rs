@@ -31,7 +31,8 @@ pub fn cast_ray(
             return;
         }
 
-        if maze[j][i] != ' ' {
+        let cell = maze[j][i];
+        if matches!(cell, '+' | '-' | '|') {
             return;
         }
 
