@@ -61,6 +61,7 @@ fn draw_cell(framebuffer: &mut Framebuffer, xo: usize, yo: usize, cell: char) {
     if cell == ' ' {
         return;
     }
+
     draw_rect(framebuffer, xo, yo, BLOCK_SIZE, BLOCK_SIZE, cell_color(cell));
 }
 
@@ -88,6 +89,7 @@ fn draw_player(framebuffer: &mut Framebuffer, player: &Player, origin_y: usize) 
     for d in 0..=DIRECTION_LENGTH {
         let x = px + (d as f32 * player.a.cos()).round() as i32;
         let y = py + (d as f32 * player.a.sin()).round() as i32;
+
         if x >= 0 && y >= 0 {
             framebuffer.point(x as usize, y as usize);
         }
@@ -127,6 +129,7 @@ fn wall_color(cell: char, side: bool) -> u32 {
         '|' => 0x1685FF,
         _ => 0xFFFFFF,
     };
+    
     if side { darken(base, 0.65) } else { base }
 }
 

@@ -1,6 +1,7 @@
 use minifb::{Key, Window};
 use nalgebra_glm::Vec2;
 use std::f32::consts::PI;
+use crate::maze::Maze;
 
 pub struct Player {
     pub pos: Vec2,
