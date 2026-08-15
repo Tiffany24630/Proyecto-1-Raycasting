@@ -8,12 +8,7 @@ pub struct RayHit {
     pub side: bool,
 }
 
-pub fn cast_ray(
-    maze: &Maze,
-    player: &Player,
-    ray_angle: f32,
-    block_size: usize,
-) -> Option<RayHit> {
+pub fn cast_ray(maze: &Maze, player: &Player, ray_angle: f32, block_size: usize,) -> Option<RayHit> {
     let block = block_size as f32;
     let ray_dir_x = ray_angle.cos();
     let ray_dir_y = ray_angle.sin();
@@ -27,28 +22,24 @@ pub fn cast_ray(
 
     let delta_dist_x = if ray_dir_x.abs() < 0.000001 {
         f32::MAX
-
     } else {
         1.0 / ray_dir_x.abs()
     };
 
     let delta_dist_y = if ray_dir_y.abs() < 0.000001 {
         f32::MAX
-
     } else {
         1.0 / ray_dir_y.abs()
     };
 
     let (step_x, mut side_dist_x) = if ray_dir_x < 0.0 {
         (-1, (player.pos.x / block - map_x as f32) * delta_dist_x)
-
     } else {
         (1, (map_x as f32 + 1.0 - player.pos.x / block) * delta_dist_x)
     };
 
     let (step_y, mut side_dist_y) = if ray_dir_y < 0.0 {
         (-1, (player.pos.y / block - map_y as f32) * delta_dist_y)
-    
     } else {
         (1, (map_y as f32 + 1.0 - player.pos.y / block) * delta_dist_y)
     };

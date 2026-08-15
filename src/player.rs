@@ -51,9 +51,11 @@ pub fn process_events(window: &Window, player: &mut Player, maze: &Maze, block_s
     }
 
     let mut movement = 0.0;
+
     if window.is_key_down(Key::W) {
         movement += MOVE_SPEED;
     }
+
     if window.is_key_down(Key::S) {
         movement -= MOVE_SPEED;
     }
@@ -61,14 +63,13 @@ pub fn process_events(window: &Window, player: &mut Player, maze: &Maze, block_s
     if movement != 0.0 {
         let dx = movement * player.a.cos();
         let dy = movement * player.a.sin();
-        let next_x = Vec2::new(player.pos.x + dx, player.pos.y);
 
+        let next_x = Vec2::new(player.pos.x + dx, player.pos.y);
         if can_move_to(maze, next_x, block_size) {
             player.pos.x = next_x.x;
         }
 
         let next_y = Vec2::new(player.pos.x, player.pos.y + dy);
-
         if can_move_to(maze, next_y, block_size) {
             player.pos.y = next_y.y;
         }
@@ -77,7 +78,7 @@ pub fn process_events(window: &Window, player: &mut Player, maze: &Maze, block_s
     if player.a > PI {
         player.a -= 2.0 * PI;
     }
-
+    
     if player.a < -PI {
         player.a += 2.0 * PI;
     }
