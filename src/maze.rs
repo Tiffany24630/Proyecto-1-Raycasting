@@ -34,6 +34,7 @@ pub fn load_maze(filename: &str, block_size: usize) -> (Maze, Player) {
             if character == 'p' {
                 let x = col * block_size + block_size / 2;
                 let y = row * block_size + block_size / 2;
+
                 player_pos = Some(Vec2::new(x as f32, y as f32));
                 *character = ' ';
             }
@@ -57,5 +58,6 @@ pub fn is_goal(maze: &Maze, player: &Player, block_size: usize) -> bool {
 
     let col = (player.pos.x / block_size as f32) as usize;
     let row = (player.pos.y / block_size as f32) as usize;
+    
     matches!(maze.get(row).and_then(|line| line.get(col)), Some('g'))
 }
