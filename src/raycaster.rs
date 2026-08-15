@@ -6,6 +6,7 @@ pub struct RayHit {
     pub distance: f32,
     pub cell: char,
     pub side: bool,
+    pub texture_u: f32,
 }
 
 pub fn cast_ray(maze: &Maze, player: &Player, ray_angle: f32, block_size: usize,) -> Option<RayHit> {
@@ -71,10 +72,21 @@ pub fn cast_ray(maze: &Maze, player: &Player, ray_angle: f32, block_size: usize,
         let cell = maze[map_y as usize][map_x as usize];
 
         if matches!(cell, '+' | '-' | '|') {
+            let distance = (distance_cells * block).max(0.001);
+            let hit_x = player.pos.x + ray_dir_x * distance;
+            let hit_y = player.pos.y + ray_dir_y * distance;
+            
+            let texture_u = if side {
+                (hit_x / block).fract()
+            } else {
+                (hit_y / block).fract()
+            };
+
             return Some(RayHit {
-                distance: (distance_cells * block).max(0.001),
+                distance,
                 cell,
                 side,
+                texture_u: if texture_u < 0.0 { texture_u + 1.0 } else { texture_u },
             });
         }
     }

@@ -8,6 +8,7 @@ pub type Maze = Vec<Vec<char>>;
 pub fn load_maze(filename: &str, block_size: usize) -> (Maze, Player) {
     let file = File::open(filename).expect("no se pudo abrir el archivo del laberinto");
     let reader = BufReader::new(file);
+    
     let mut maze: Maze = Vec::new();
     let mut player_pos: Option<Vec2> = None;
     let mut expected_width: Option<usize> = None;
@@ -46,6 +47,10 @@ pub fn load_maze(filename: &str, block_size: usize) -> (Maze, Player) {
     let player = Player {
         pos: player_pos.unwrap_or_else(|| Vec2::new(block_size as f32 * 1.5, block_size as f32 * 1.5)),
         a: PI / 3.0,
+        controller_move: 0.0,
+        controller_rotate: 0.0,
+        controller_forward: false,
+        controller_backward: false,
     };
 
     (maze, player)
