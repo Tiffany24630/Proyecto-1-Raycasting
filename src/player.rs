@@ -6,6 +6,10 @@ use crate::maze::Maze;
 pub struct Player {
     pub pos: Vec2,
     pub a: f32,
+    pub controller_move: f32,
+    pub controller_rotate: f32,
+    pub controller_forward: bool,
+    pub controller_backward: bool,
 }
 
 fn is_wall(maze: &Maze, x: f32, y: f32, block_size: usize) -> bool {
@@ -50,6 +54,8 @@ pub fn process_events(window: &Window, player: &mut Player, maze: &Maze, block_s
         player.a += ROTATION_SPEED;
     }
 
+    player.a += player.controller_rotate * 0.045;
+
     let mut movement = 0.0;
 
     if window.is_key_down(Key::W) {
@@ -60,16 +66,24 @@ pub fn process_events(window: &Window, player: &mut Player, maze: &Maze, block_s
         movement -= MOVE_SPEED;
     }
 
+    if player.controller_forward {
+        movement += MOVE_SPEED;
+    }
+
+    movement += player.controller_move * MOVE_SPEED;
+
     if movement != 0.0 {
         let dx = movement * player.a.cos();
         let dy = movement * player.a.sin();
 
         let next_x = Vec2::new(player.pos.x + dx, player.pos.y);
+
         if can_move_to(maze, next_x, block_size) {
             player.pos.x = next_x.x;
         }
 
         let next_y = Vec2::new(player.pos.x, player.pos.y + dy);
+        
         if can_move_to(maze, next_y, block_size) {
             player.pos.y = next_y.y;
         }
