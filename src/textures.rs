@@ -16,9 +16,12 @@ impl TextureSet {
     pub fn load() -> Self {
         let mut textures = HashMap::new();
 
-        textures.insert('+', load_texture("assets/textures/wall_cyan.png"));
-        textures.insert('-', load_texture("assets/textures/wall_purple.png"));
-        textures.insert('|', load_texture("assets/textures/wall_blue.png"));
+        textures.insert('+', load_texture("assets/textures/wall_plaster.png"));
+        textures.insert('-', load_texture("assets/textures/wall_wood.png"));
+        textures.insert('|', load_texture("assets/textures/wall_wallpaper.png"));
+        textures.insert('b', load_texture("assets/textures/wall_brick.png"));
+        textures.insert('g', load_texture("assets/textures/door_closed.png"));
+        textures.insert('o', load_texture("assets/textures/door_open.png"));
 
         Self { textures }
     }
@@ -31,6 +34,7 @@ impl TextureSet {
 fn load_texture<P: AsRef<Path>>(path: P) -> Texture {
     let path_ref = path.as_ref();
     let image = ImageReader::open(path_ref).unwrap_or_else(|e| panic!("no se pudo abrir la textura {:?}: {}", path_ref, e)).decode().unwrap_or_else(|e| panic!("no se pudo decodificar la textura {:?}: {}", path_ref, e)).to_rgb8();
+
     let (width, height) = image.dimensions();
     let pixels = image.pixels().map(|p| ((p[0] as u32) << 16) | ((p[1] as u32) << 8) | p[2] as u32).collect();
 

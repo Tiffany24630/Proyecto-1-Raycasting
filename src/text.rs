@@ -32,6 +32,7 @@ pub fn draw_text(framebuffer: &mut Framebuffer, x: usize, y: usize, text: &str, 
 
 fn draw_scaled_pixel(framebuffer: &mut Framebuffer, x: usize, y: usize, scale: usize, color: u32,) {
     framebuffer.set_current_color(color);
+    
     for py in y..y.saturating_add(scale) {
         for px in x..x.saturating_add(scale) {
             framebuffer.point(px, py);

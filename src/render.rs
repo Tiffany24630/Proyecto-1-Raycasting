@@ -5,6 +5,7 @@ use crate::maze::Maze;
 use crate::player::Player;
 use crate::raycaster::cast_ray as cast_ray_3d;
 use crate::text::draw_text;
+use crate::textures::TextureSet;
 
 pub const BLOCK_SIZE: usize = 20;
 pub const WINDOW_WIDTH: usize = 1300;
@@ -96,7 +97,6 @@ pub fn render_3d(framebuffer: &mut Framebuffer, maze: &Maze, player: &Player, te
     draw_text(framebuffer, 18, 82, if textures_enabled { "T: TEXTURAS ON" } else { "T: TEXTURAS OFF" }, 0xFFFFFF, 1,);
     draw_text(framebuffer, 18, 102, if music_enabled { "M: MUSICA ON" } else { "M: MUSICA OFF" }, 0xFFFFFF, 1,);
     draw_view_button(framebuffer);
-
     draw_rect(framebuffer, 18, 798, 760, 84, 0x101522);
     draw_text(framebuffer, 30, 806, "TECLADO: W/S MOVER | A/D GIRAR | V 2D/3D | T TEXTURAS | M MUSICA", 0xFFFFFF, 1);
     draw_text(framebuffer, 30, 828, "MOUSE: ROTACION HORIZONTAL", 0xAAB7D4, 1);
@@ -268,10 +268,12 @@ fn draw_minimap_ray(framebuffer: &mut Framebuffer, maze: &Maze, player: &Player,
 
 fn cell_color(cell: char) -> u32 {
     match cell {
-        '+' => 0x4AFBFF,
-        '-' => 0x9B59FF,
-        '|' => 0x1685FF,
-        'g' | 'G' => 0x16C172,
+        '+' => 0xB9B0A1, //yeso viejo
+        '-' => 0x6E4A32, //madera
+        '|' => 0x7B7060, //papel tapiz
+        'b' => 0x8A7564, //ladrillo/piedra
+        'g' | 'G' => 0xC48A3A, //puerta cerrada
+        'o' | 'O' => 0x3D6B55, //puerta abierta
         _ => 0x202840,
     }
 }
