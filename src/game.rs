@@ -6,16 +6,17 @@ pub enum GameState {
     Success,
 }
 
-pub const LEVELS: [&str; 7] = [
-    "./maze1.txt",
-    "./maze2.txt",
-    "./maze3.txt",
-    "./maze4.txt",
-    "./maze5.txt",
-    "./maze6.txt",
-    "./maze7.txt",
+pub const LEVELS: [&str; 3] = [
+    "levels/level1.txt",
+    "levels/level2.txt",
+    "levels/level3.txt",
 ];
 
 pub fn level_name(index: usize) -> String {
-    format!("NIVEL {}", index + 1)
+    match index {
+        0 => "Fácil".to_string(),
+        1 => "Intermedio".to_string(),
+        2 => "Difícil".to_string(),
+        _ => format!("NIVEL {}", index + 1),
+    }
 }
