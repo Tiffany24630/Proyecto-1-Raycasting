@@ -21,6 +21,7 @@ impl AudioManager {
                     music: sink,
                     enabled: true,
                 };
+                
                 manager.play_music();
                 manager
             }
