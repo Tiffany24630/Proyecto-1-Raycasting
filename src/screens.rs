@@ -7,7 +7,7 @@ use crate::text::draw_text;
 
 pub fn render_welcome(framebuffer: &mut Framebuffer) {
     draw_rect(framebuffer, 0, 0, framebuffer.width, framebuffer.height, 0x080B14);
-    draw_text(framebuffer, 365, 190, "LA CASA ABANDONADA", 0x4AFBFF, 4);
+    draw_text(framebuffer, 365, 190, "LABERINTO LA CASA ABANDONADA", 0x4AFBFF, 4);
     draw_text(framebuffer, 410, 300, "ENCUENTRA LA SALIDA", 0xFFFFFF, 3);
     draw_text(framebuffer, 390, 425, "ENTER / A PARA CONTINUAR", 0xFFFFFF, 2);
     draw_text(framebuffer, 365, 485, "TECLADO: W/S MOVER | A/D GIRAR | Q/E O FLECHAS LATERALES", 0xAAB7D4, 2);
@@ -45,7 +45,6 @@ pub fn render_success(framebuffer: &mut Framebuffer, level: usize) {
         &[
             format!("{} SUPERADO", level_name(level)),
             "ENTER / A - SIGUIENTE NIVEL".to_string(),
-            "B - SELECCIONAR NIVEL   ESC - SALIR".to_string(),
         ],
     );
 }

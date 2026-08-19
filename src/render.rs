@@ -36,7 +36,7 @@ pub fn render_2d(framebuffer: &mut Framebuffer, maze: &Maze, player: &Player) {
     draw_player_2d(framebuffer, player, 0);
     draw_rect(framebuffer, 0, 420, WINDOW_WIDTH, WINDOW_HEIGHT - 420, 0x0D1220);
     draw_text(framebuffer, 18, 438, "VISTA 2D", 0x4AFBFF, 2);
-    draw_text(framebuffer, 18, 474, "W/S AVANZAR-RETROCEDER   A/D GIRAR   Q/E O FLECHAS: LATERAL", 0xFFFFFF, 1);
+    draw_text(framebuffer, 18, 474, "W/S AVANZAR-RETROCEDER   A/D LATERAL   FLECHAS: GIRAR", 0xFFFFFF, 1);
     draw_text(framebuffer, 18, 498, "V CAMBIAR 2D/3D   T TEXTURAS   M MUSICA", 0xFFFFFF, 1);
     draw_text(framebuffer, 18, 522, "MOUSE: ROTACION HORIZONTAL", 0xAAB7D4, 1);
     draw_text(framebuffer, 18, 546, "CONTROL: STICK IZQ. MOVIMIENTO / STICK DER. ROTACION", 0xAAB7D4, 1);
