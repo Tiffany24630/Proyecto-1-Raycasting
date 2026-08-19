@@ -28,8 +28,9 @@ fn main() {
     let mut window = Window::new("Maze Runner - Bienvenida", WINDOW_WIDTH, WINDOW_HEIGHT, WindowOptions::default(),).expect("no se pudo crear la ventana");
 
     let textures = TextureSet::load();
-    let _audio = AudioManager::new();
-
+    
+    let mut audio = AudioManager::new();
+    let mut textures_enabled = true;
     let mut controller = ControllerInput::new();
     let mut state = GameState::Welcome;
     let mut selected_level = 0usize;
@@ -58,7 +59,7 @@ fn main() {
             GameState::Welcome => {
                 render_welcome(&mut framebuffer);
 
-                if window.is_key_pressed(Key::Enter, KeyRepeat::No) {
+                if window.is_key_pressed(Key::Enter, KeyRepeat::No) || controller.confirm_pressed() {
                     state = GameState::LevelSelect;
 
                     window.set_title("Maze Runner - Selección de nivel");
@@ -66,10 +67,10 @@ fn main() {
             }
 
             GameState::LevelSelect => {
-                update_level_selection(&window, &mut selected_level);
+                update_level_selection(&window, &controller, &mut selected_level);
                 render_level_select(&mut framebuffer, selected_level);
 
-                if window.is_key_pressed(Key::Enter, KeyRepeat::No) {
+                if window.is_key_pressed(Key::Enter, KeyRepeat::No) || controller.confirm_pressed() {
                     let (new_maze, new_player) = load_maze(LEVELS[selected_level], BLOCK_SIZE);
                     
                     maze = new_maze;
@@ -101,11 +102,19 @@ fn main() {
 
                 controller.apply_to_player(current_player);
 
+                if window.is_key_pressed(Key::T, KeyRepeat::No) || controller.toggle_textures_pressed() {
+                    textures_enabled = !textures_enabled;
+                }
+
+                if window.is_key_pressed(Key::M, KeyRepeat::No) || controller.toggle_music_pressed() {
+                    audio.toggle_music();
+                }
+
                 process_events(&window, current_player, &maze, BLOCK_SIZE);
                 update_mouse_rotation(&window, current_player, &mut last_mouse_x, view_mode == ViewMode::View3D,);
 
                 match view_mode {
-                    ViewMode::View3D => render_3d(&mut framebuffer, &maze, current_player, &textures),
+                    ViewMode::View3D => render_3d(&mut framebuffer, &maze, current_player, &textures, textures_enabled, audio.is_enabled()),
                     ViewMode::View2D => render_2d(&mut framebuffer, &maze, current_player),
                 }
 
@@ -120,7 +129,7 @@ fn main() {
             GameState::Success => {
                 render_success(&mut framebuffer, selected_level);
 
-                if window.is_key_pressed(Key::Enter, KeyRepeat::No) {
+                if window.is_key_pressed(Key::Enter, KeyRepeat::No) || controller.confirm_pressed() {
                     selected_level = (selected_level + 1) % LEVELS.len();
                     
                     let (new_maze, new_player) = load_maze(LEVELS[selected_level], BLOCK_SIZE);

@@ -18,27 +18,26 @@ pub fn load_maze(filename: &str, block_size: usize) -> (Maze, Player) {
 
         let mut cells: Vec<char> = Vec::new();
 
+        for (col, character) in line.chars().enumerate() {
+            if character == 'p' || character == 'P' {
+                let x = col * block_size + block_size / 2;
+                let y = row * block_size + block_size / 2;
+                player_pos = Some(Vec2::new(x as f32, y as f32));
+                cells.push(' ');
+            } else {
+                cells.push(character);
+            }
+        }
+
         if let Some(width) = expected_width {
             if cells.len() != width {
                 panic!(
                     "el mapa debe ser rectangular: la fila {} tiene {} columnas y se esperaban {}",
-                    row,
-                    cells.len(),
-                    width
+                    row, cells.len(), width
                 );
             }
         } else {
             expected_width = Some(cells.len());
-        }
-
-        for (col, character) in line.chars().enumerate() {
-            if character == 'p' {
-                let x = col * block_size + block_size / 2;
-                let y = row * block_size + block_size / 2;
-
-                player_pos = Some(Vec2::new(x as f32, y as f32));
-                *character = ' ';
-            }
         }
 
         maze.push(cells);
@@ -49,6 +48,7 @@ pub fn load_maze(filename: &str, block_size: usize) -> (Maze, Player) {
         a: PI / 3.0,
         controller_move: 0.0,
         controller_rotate: 0.0,
+        controller_strafe: 0.0,
         controller_forward: false,
         controller_backward: false,
     };

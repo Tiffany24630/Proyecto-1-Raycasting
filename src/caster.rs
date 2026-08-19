@@ -26,7 +26,7 @@ pub fn cast_ray(framebuffer: &mut Framebuffer, maze: &Maze, player: &Player, a: 
 
         let cell = maze[j][i];
         
-        if matches!(cell, '+' | '-' | '|') {
+        if matches!(cell, '+' | '-' | '|' | 'b' | 'g' | 'o') {
             return;
         }
 

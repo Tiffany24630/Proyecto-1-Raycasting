@@ -71,7 +71,7 @@ pub fn cast_ray(maze: &Maze, player: &Player, ray_angle: f32, block_size: usize,
 
         let cell = maze[map_y as usize][map_x as usize];
 
-        if matches!(cell, '+' | '-' | '|') {
+        if matches!(cell, '+' | '-' | '|' | 'b' | 'g' | 'o') {
             let distance = (distance_cells * block).max(0.001);
             let hit_x = player.pos.x + ray_dir_x * distance;
             let hit_y = player.pos.y + ray_dir_y * distance;
