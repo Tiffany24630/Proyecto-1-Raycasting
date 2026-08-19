@@ -20,8 +20,8 @@ impl TextureSet {
         textures.insert('-', load_texture("assets/textures/wall_wood.png"));
         textures.insert('|', load_texture("assets/textures/wall_wallpaper.png"));
         textures.insert('b', load_texture("assets/textures/wall_brick.png"));
-        textures.insert('g', load_texture("assets/textures/door_closed.png"));
-        textures.insert('o', load_texture("assets/textures/door_open.png"));
+        textures.insert('g', load_texture("assets/textures/door_open.png"));
+        textures.insert('o', load_texture("assets/textures/door_closed.png"));
 
         Self { textures }
     }

@@ -22,7 +22,7 @@ fn is_wall(maze: &Maze, x: f32, y: f32, block_size: usize) -> bool {
     let row = (y / block_size as f32) as usize;
 
     match maze.get(row).and_then(|line| line.get(col)) {
-        Some(&cell) => matches!(cell, '+' | '-' | '|' | 'b'),
+        Some(&cell) => matches!(cell, '+' | '-' | '|' | 'b' | 'o'),
         None => true,
     }
 }
