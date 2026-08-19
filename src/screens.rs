@@ -10,8 +10,8 @@ pub fn render_welcome(framebuffer: &mut Framebuffer) {
     draw_text(framebuffer, 365, 190, "LA CASA ABANDONADA", 0x4AFBFF, 4);
     draw_text(framebuffer, 410, 300, "ENCUENTRA LA SALIDA", 0xFFFFFF, 3);
     draw_text(framebuffer, 390, 425, "ENTER / A PARA CONTINUAR", 0xFFFFFF, 2);
-    draw_text(framebuffer, 365, 485, "TECLADO: WASD + MOUSE", 0xAAB7D4, 2);
-    draw_text(framebuffer, 340, 530, "CONTROL: STICK IZQ + STICK DER", 0xAAB7D4, 2);
+    draw_text(framebuffer, 365, 485, "TECLADO: W/S MOVER | A/D GIRAR | Q/E O FLECHAS LATERALES", 0xAAB7D4, 2);
+    draw_text(framebuffer, 340, 530, "CONTROL: STICK IZQ MOVER/LATERAL | STICK DER GIRAR", 0xAAB7D4, 2);
     draw_text(framebuffer, 360, 600, "V/Y: 2D-3D   T/X: TEXTURAS   M/START: MUSICA", 0xFFFFFF, 1);
     draw_text(framebuffer, 390, 630, "ESC: SALIR", 0xAAB7D4, 1);
 }

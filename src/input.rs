@@ -129,6 +129,7 @@ impl ControllerInput {
         let (Some(gilrs), Some(id)) = (&self.gilrs, self.active_id) else {
             player.controller_move = 0.0;
             player.controller_rotate = 0.0;
+            player.controller_strafe = 0.0;
             player.controller_forward = false;
             player.controller_backward = false;
             return;
@@ -136,9 +137,11 @@ impl ControllerInput {
 
         let gamepad = gilrs.gamepad(id);
         let y = gamepad.value(Axis::LeftStickY);
+        let x = gamepad.value(Axis::LeftStickX);
         let rotate = gamepad.value(Axis::RightStickX);
 
-        player.controller_move = if y.abs() > 0.15 { y } else { 0.0 };
+        player.controller_move = if y.abs() > 0.15 { -y } else { 0.0 };
+        player.controller_strafe = if x.abs() > 0.15 { x } else { 0.0 };
         player.controller_rotate = if rotate.abs() > 0.15 { rotate } else { 0.0 };
         player.controller_forward = gamepad.is_pressed(Button::South);
         player.controller_backward = gamepad.is_pressed(Button::East);

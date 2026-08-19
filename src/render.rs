@@ -36,7 +36,7 @@ pub fn render_2d(framebuffer: &mut Framebuffer, maze: &Maze, player: &Player) {
     draw_player_2d(framebuffer, player, 0);
     draw_rect(framebuffer, 0, 420, WINDOW_WIDTH, WINDOW_HEIGHT - 420, 0x0D1220);
     draw_text(framebuffer, 18, 438, "VISTA 2D", 0x4AFBFF, 2);
-    draw_text(framebuffer, 18, 474, "W/S AVANZAR-RETROCEDER   A/D GIRAR", 0xFFFFFF, 1);
+    draw_text(framebuffer, 18, 474, "W/S AVANZAR-RETROCEDER   A/D GIRAR   Q/E O FLECHAS: LATERAL", 0xFFFFFF, 1);
     draw_text(framebuffer, 18, 498, "V CAMBIAR 2D/3D   T TEXTURAS   M MUSICA", 0xFFFFFF, 1);
     draw_text(framebuffer, 18, 522, "MOUSE: ROTACION HORIZONTAL", 0xAAB7D4, 1);
     draw_text(framebuffer, 18, 546, "CONTROL: STICK IZQ. MOVIMIENTO / STICK DER. ROTACION", 0xAAB7D4, 1);
@@ -100,7 +100,7 @@ pub fn render_3d(framebuffer: &mut Framebuffer, maze: &Maze, player: &Player, te
     draw_rect(framebuffer, 18, 798, 760, 84, 0x101522);
     draw_text(framebuffer, 30, 806, "TECLADO: W/S MOVER | A/D GIRAR | V 2D/3D | T TEXTURAS | M MUSICA", 0xFFFFFF, 1);
     draw_text(framebuffer, 30, 828, "MOUSE: ROTACION HORIZONTAL", 0xAAB7D4, 1);
-    draw_text(framebuffer, 30, 850, "XBOX: STICK IZQ MOVER | STICK DER GIRAR | A ENTER | X TEXTURAS", 0xAAB7D4, 1);
+    draw_text(framebuffer, 30, 850, "XBOX: STICK IZQ MOVER/LATERAL | STICK DER GIRAR | A ENTER | X TEXTURAS", 0xAAB7D4, 1);
     draw_text(framebuffer, 30, 868, "Y 2D/3D | START MUSICA | D-PAD NIVELES", 0xAAB7D4, 1);
 }
 
@@ -175,7 +175,7 @@ fn draw_minimap(framebuffer: &mut Framebuffer, maze: &Maze, player: &Player) {
 
     for (row, line) in maze.iter().enumerate() {
         for (col, &cell) in line.iter().enumerate() {
-            if matches!(cell, '+' | '-' | '|') {
+            if matches!(cell, '+' | '-' | '|' | 'b') {
                 let x = ox + (col as f32 * scale) as usize;
                 let y = oy + (row as f32 * scale) as usize;
                 let size = scale.ceil().max(1.0) as usize;
@@ -268,18 +268,19 @@ fn draw_minimap_ray(framebuffer: &mut Framebuffer, maze: &Maze, player: &Player,
 
 fn cell_color(cell: char) -> u32 {
     match cell {
-        '+' => 0xB9B0A1, //yeso viejo
-        '-' => 0x6E4A32, //madera
-        '|' => 0x7B7060, //papel tapiz
-        'b' => 0x8A7564, //ladrillo/piedra
-        'g' | 'G' => 0xC48A3A, //puerta cerrada
-        'o' | 'O' => 0x3D6B55, //puerta abierta
+        '+' => 0xB9B0A1, //Yeso viejo
+        '-' => 0x6E4A32, //Madera
+        '|' => 0x7B7060, //Papel tapiz
+        'b' => 0x8A7564, //Ladrillo/piedra
+        'g' | 'G' => 0xC48A3A, //Puerta cerrada
+        'o' | 'O' => 0x3D6B55, //Puerta abierta
         _ => 0x202840,
     }
 }
 
 fn wall_color(cell: char, side: bool) -> u32 {
     let base = cell_color(cell);
+
     if side { darken(base, 0.65) } else { base }
 }
 
@@ -287,6 +288,7 @@ fn darken(color: u32, factor: f32) -> u32 {
     let r = (((color >> 16) & 0xFF) as f32 * factor) as u32;
     let g = (((color >> 8) & 0xFF) as f32 * factor) as u32;
     let b = ((color & 0xFF) as f32 * factor) as u32;
+    
     (r << 16) | (g << 8) | b
 }
 

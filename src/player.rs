@@ -8,6 +8,7 @@ pub struct Player {
     pub a: f32,
     pub controller_move: f32,
     pub controller_rotate: f32,
+    pub controller_strafe: f32,
     pub controller_forward: bool,
     pub controller_backward: bool,
 }
@@ -21,7 +22,7 @@ fn is_wall(maze: &Maze, x: f32, y: f32, block_size: usize) -> bool {
     let row = (y / block_size as f32) as usize;
 
     match maze.get(row).and_then(|line| line.get(col)) {
-        Some(&cell) => matches!(cell, '+' | '-' | '|'),
+        Some(&cell) => matches!(cell, '+' | '-' | '|' | 'b'),
         None => true,
     }
 }
@@ -46,36 +47,44 @@ pub fn process_events(window: &Window, player: &mut Player, maze: &Maze, block_s
     const MOVE_SPEED: f32 = 4.5;
     const ROTATION_SPEED: f32 = PI / 45.0;
 
-    if window.is_key_down(Key::A) {
+    if window.is_key_down(Key::Left) {
         player.a -= ROTATION_SPEED;
     }
 
-    if window.is_key_down(Key::D) {
+    if window.is_key_down(Key::Right) {
         player.a += ROTATION_SPEED;
     }
 
     player.a += player.controller_rotate * 0.045;
 
-    let mut movement = 0.0;
+    let mut forward = 0.0;
 
     if window.is_key_down(Key::W) {
-        movement += MOVE_SPEED;
+        forward += MOVE_SPEED;
     }
 
     if window.is_key_down(Key::S) {
-        movement -= MOVE_SPEED;
+        forward -= MOVE_SPEED;
     }
 
-    if player.controller_forward {
-        movement += MOVE_SPEED;
+    forward += player.controller_move * MOVE_SPEED;
+
+    let mut strafe = 0.0;
+
+    if window.is_key_down(Key::A) {
+        strafe -= MOVE_SPEED;
     }
 
-    movement += player.controller_move * MOVE_SPEED;
+    if window.is_key_down(Key::D) {
+        strafe += MOVE_SPEED;
+    }
 
-    if movement != 0.0 {
-        let dx = movement * player.a.cos();
-        let dy = movement * player.a.sin();
+    strafe += player.controller_strafe * MOVE_SPEED;
 
+    let dx = forward * player.a.cos() - strafe * player.a.sin();
+    let dy = forward * player.a.sin() + strafe * player.a.cos();
+
+    if dx != 0.0 || dy != 0.0 {
         let next_x = Vec2::new(player.pos.x + dx, player.pos.y);
 
         if can_move_to(maze, next_x, block_size) {
