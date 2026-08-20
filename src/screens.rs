@@ -7,13 +7,13 @@ use crate::text::draw_text;
 
 pub fn render_welcome(framebuffer: &mut Framebuffer) {
     draw_rect(framebuffer, 0, 0, framebuffer.width, framebuffer.height, 0x080B14);
-    draw_text(framebuffer, 365, 190, "LABERINTO LA CASA ABANDONADA", 0x4AFBFF, 4);
-    draw_text(framebuffer, 410, 300, "ENCUENTRA LA SALIDA", 0xFFFFFF, 3);
-    draw_text(framebuffer, 390, 425, "ENTER / A PARA CONTINUAR", 0xFFFFFF, 2);
-    draw_text(framebuffer, 365, 485, "TECLADO: W/S MOVER | A/D GIRAR | Q/E O FLECHAS LATERALES", 0xAAB7D4, 2);
-    draw_text(framebuffer, 340, 530, "CONTROL: STICK IZQ MOVER/LATERAL | STICK DER GIRAR", 0xAAB7D4, 2);
-    draw_text(framebuffer, 360, 600, "V/Y: 2D-3D   T/X: TEXTURAS   M/START: MUSICA", 0xFFFFFF, 1);
-    draw_text(framebuffer, 390, 630, "ESC: SALIR", 0xAAB7D4, 1);
+    draw_text(framebuffer, 150, 200, "LABERINTO LA CASA ABANDONADA", 0x4AFBFF, 4);
+    draw_text(framebuffer, 400, 300, "ENCUENTRA LA SALIDA", 0xFFFFFF, 3);
+    draw_text(framebuffer, 420, 425, "ENTER / A PARA CONTINUAR", 0xFFFFFF, 2);
+    draw_text(framebuffer, 150, 485, "TECLADO: W/S MOVER | A/D GIRAR | Q/E O FLECHAS LATERALES", 0xAAB7D4, 2);
+    draw_text(framebuffer, 190, 530, "CONTROL: STICK IZQ MOVER/LATERAL | STICK DER GIRAR", 0xAAB7D4, 2);
+    draw_text(framebuffer, 440, 600, "V/Y: 2D-3D   T/X: TEXTURAS   M/START: MUSICA", 0xFFFFFF, 1);
+    draw_text(framebuffer, 600, 630, "ESC: SALIR", 0xAAB7D4, 1);
 }
 
 pub fn render_level_select(framebuffer: &mut Framebuffer, selected: usize) {

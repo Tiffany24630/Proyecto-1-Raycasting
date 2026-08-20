@@ -98,11 +98,11 @@ impl ControllerInput {
     }
 
     pub fn confirm_pressed(&self) -> bool {
-        self.just_pressed(self.current.south || self.current.start, self.previous.south || self.previous.start)
+        self.just_pressed(self.current.east, self.previous.east)
     }
 
     pub fn back_pressed(&self) -> bool {
-        self.just_pressed(self.current.east || self.current.select, self.previous.east || self.previous.select)
+        self.just_pressed(self.current.south, self.previous.south)
     }
 
     pub fn toggle_view_pressed(&self) -> bool {
@@ -140,11 +140,11 @@ impl ControllerInput {
         let x = gamepad.value(Axis::LeftStickX);
         let rotate = gamepad.value(Axis::RightStickX);
 
-        player.controller_move = if y.abs() > 0.15 { -y } else { 0.0 };
+        player.controller_move = if y.abs() > 0.15 { y } else { 0.0 };
         player.controller_strafe = if x.abs() > 0.15 { x } else { 0.0 };
         player.controller_rotate = if rotate.abs() > 0.15 { rotate } else { 0.0 };
-        player.controller_forward = gamepad.is_pressed(Button::South);
-        player.controller_backward = gamepad.is_pressed(Button::East);
+        player.controller_forward = false;
+        player.controller_backward = false;
     }
 }
 

@@ -53,6 +53,11 @@ fn main() {
         let frame_start = Instant::now();
 
         controller.update();
+
+        if controller.back_pressed() {
+            break;
+        }
+
         framebuffer.clear();
 
         match state {
@@ -86,7 +91,7 @@ fn main() {
                 let current_player = player.as_mut().expect("jugador no inicializado");
                 let mouse_down = window.get_mouse_down(MouseButton::Left);
                 let mouse_clicked_button = view_button_down(&window) && !mouse_was_down;
-                let key_toggle = window.is_key_pressed(Key::V, KeyRepeat::No) && last_toggle.elapsed() >= Duration::from_millis(250);
+                let key_toggle = (window.is_key_pressed(Key::V, KeyRepeat::No) || controller.toggle_view_pressed()) && last_toggle.elapsed() >= Duration::from_millis(250);
 
                 if (key_toggle || mouse_clicked_button) && last_toggle.elapsed() >= Duration::from_millis(250){
                     view_mode = match view_mode {
